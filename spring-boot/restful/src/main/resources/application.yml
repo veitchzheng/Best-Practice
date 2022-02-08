@@ -1,7 +1,7 @@
 server:
   servlet:
-    context-path: /demo
+    context-path: /example
 
 spring:
   application:
-    name: demo
+    name: example
