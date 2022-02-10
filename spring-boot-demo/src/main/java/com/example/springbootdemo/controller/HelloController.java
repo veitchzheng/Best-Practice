@@ -34,6 +34,7 @@ public class HelloController {
         Future<String> future = threadPoolService.asyncWithReturn();
         log.info("async result:{}", future.get());
         threadPoolService.customExecutor();
+        Thread.sleep(5000);
         return "hello thread pool!";
     }
 }

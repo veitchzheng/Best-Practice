@@ -19,7 +19,7 @@ class SpringAsyncConfig implements AsyncConfigurer {
     /**
      * Async 线程池
      *
-     * @return
+     * @return 默认的线程池
      */
     @Override
     public Executor getAsyncExecutor() {
