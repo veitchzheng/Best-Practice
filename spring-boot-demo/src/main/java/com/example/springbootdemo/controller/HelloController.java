@@ -1,6 +1,8 @@
 package com.example.springbootdemo.controller;
 
 import com.example.springbootdemo.service.ThreadPoolService;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,10 +27,12 @@ public class HelloController {
     private ThreadPoolService threadPoolService;
 
     @GetMapping("helloThreadPool")
-    public String helloThreadPool() {
+    public String helloThreadPool() throws ExecutionException, InterruptedException {
         log.info("main thread log");
         threadPoolService.asyncExecutor();
         threadPoolService.asyncWithCustomExecutor();
+        Future<String> future = threadPoolService.asyncWithReturn();
+        log.info("async result:{}", future.get());
         threadPoolService.customExecutor();
         return "hello thread pool!";
     }

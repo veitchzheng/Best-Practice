@@ -1,9 +1,11 @@
 package com.example.springbootdemo.service;
 
 import java.util.concurrent.Executor;
+import java.util.concurrent.Future;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,14 +26,16 @@ public class ThreadPoolService {
         log.info("async with custom executor service log");
     }
 
+    @Async
+    public Future<String> asyncWithReturn() {
+        log.info("async with return");
+        return new AsyncResult<>("async execute finish!");
+    }
+
     @Resource(name = "taskExecutor")
     private Executor executor;
 
     public void customExecutor() {
         executor.execute(() -> log.info("custom executor service log"));
     }
-
-    // TODO  有返回的异步调用
-
-
 }
