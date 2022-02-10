@@ -16,11 +16,9 @@ class ThreadConfigTest {
     private ThreadConfig threadConfig;
 
     @Test
-    void testThreadConfigLogTraceIdAndSpanId(){
-        log.info("thread main");
-        threadConfig.executor().execute(()->{
-            log.info("thread new");
-        });
+    void test(){
+        System.out.println(123);
     }
+
 
 }

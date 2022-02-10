@@ -47,6 +47,15 @@
       <artifactId>service</artifactId>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.example</groupId>
+      <artifactId>service</artifactId>
+      <version>${example.version}</version>
+    </dependency>
   </dependencies>
 
 </project>
