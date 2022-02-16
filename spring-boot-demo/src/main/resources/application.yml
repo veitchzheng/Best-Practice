@@ -13,4 +13,12 @@ feign:
       default:
         encoder: feign.jackson.JacksonEncoder
         decoder: feign.jackson.JacksonDecoder
-        logger-level: basic
+        logger-level: full
+
+# feign 调用日志设置为 debug，打印调用详细
+logging:
+  level:
+    com:
+      example:
+        springbootdemo:
+          outer: debug
