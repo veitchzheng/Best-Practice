@@ -1,6 +1,8 @@
 package com.example.springbootdemo.aspect;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
+import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -19,6 +21,9 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class ServiceLoggingAspect {
+
+    @Resource
+    private ObjectMapper objectMapper;
 
     /**
      * Pointcut that matches all repositories, services and Web REST endpoints.
@@ -63,9 +68,8 @@ public class ServiceLoggingAspect {
             log.info("Enter: {}.{}() with argument[s] = {}", joinPoint.getSignature().getDeclaringTypeName(),
                 joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
             Object result = joinPoint.proceed();
-            // todo result json
             log.info("Exit: {}.{}() with result = {}", joinPoint.getSignature().getDeclaringTypeName(),
-                joinPoint.getSignature().getName(), result);
+                joinPoint.getSignature().getName(), objectMapper.writeValueAsString(result));
             return result;
         } catch (IllegalArgumentException e) {
             log.error("Illegal argument: {} in {}.{}()", Arrays.toString(joinPoint.getArgs()),

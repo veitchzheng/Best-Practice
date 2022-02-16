@@ -3,6 +3,7 @@ package com.example.springbootdemo.controller;
 import com.example.springbootdemo.outer.TestFeign;
 import com.example.springbootdemo.outer.TestFeign.User;
 import com.example.springbootdemo.service.ThreadPoolService;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -51,5 +52,10 @@ public class HelloController {
     public List<User> helloFeign(){
         List<User> posts = testFeign.posts();
         return posts;
+    }
+
+    @GetMapping("/helloDate")
+    public String helloDate(){
+        return "hello " + new Date();
     }
 }
