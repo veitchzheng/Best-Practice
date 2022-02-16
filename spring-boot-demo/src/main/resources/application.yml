@@ -6,3 +6,11 @@ server:
 spring:
   application:
     name: spring-boot-demo
+
+feign:
+  client:
+    config:
+      default:
+        encoder: feign.jackson.JacksonEncoder
+        decoder: feign.jackson.JacksonDecoder
+        logger-level: basic

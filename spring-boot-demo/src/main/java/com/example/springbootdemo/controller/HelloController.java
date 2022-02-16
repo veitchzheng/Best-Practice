@@ -1,6 +1,9 @@
 package com.example.springbootdemo.controller;
 
+import com.example.springbootdemo.outer.TestFeign;
+import com.example.springbootdemo.outer.TestFeign.User;
 import com.example.springbootdemo.service.ThreadPoolService;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import javax.annotation.Resource;
@@ -39,5 +42,14 @@ public class HelloController {
         threadPoolService.customExecutor();
         Thread.sleep(5000);
         return "hello thread pool!";
+    }
+
+    @Resource
+    private TestFeign testFeign;
+
+    @GetMapping("/helloFeign")
+    public List<User> helloFeign(){
+        List<User> posts = testFeign.posts();
+        return posts;
     }
 }
