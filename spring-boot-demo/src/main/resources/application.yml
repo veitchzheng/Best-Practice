@@ -6,11 +6,9 @@ server:
 spring:
   application:
     name: spring-boot-demo
-  jackson:
-    date-format: java.text.SimpleDateFormat
 
 
-# feign 调用日志设置为 debug，打印调用详细
+# 指定目录输入 debug
 logging:
   level:
     com:
