@@ -6,7 +6,8 @@ server:
 spring:
   application:
     name: spring-boot-demo
-
+  profiles:
+    active: local
 
 # 指定目录输入 debug
 logging:

@@ -6,17 +6,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Contract;
 import feign.Logger;
 import feign.Request;
+import feign.RequestInterceptor;
+import feign.RequestTemplate;
 import feign.Retryer;
 import feign.codec.Decoder;
 import feign.codec.Encoder;
 import feign.codec.ErrorDecoder;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
+import io.micrometer.core.instrument.util.StringUtils;
+import java.net.URL;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
+import lombok.Setter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 /**
  * @author zhengweichao  2022-02-16 7:11 下午
@@ -71,5 +80,37 @@ public class FeignClientConfig {
             log.info("feign error {}", s);
             return null;
         };
+    }
+
+
+}
+
+/**
+ * feign 请求的签名拦截器
+ */
+@Setter
+@Component
+@ConfigurationProperties(prefix = "sign")
+class FeignRequestSignInterceptor implements RequestInterceptor {
+
+    private Map<String, String> configs;
+
+    /**
+     * Called for every request. Add data using methods on the supplied {@link RequestTemplate}.
+     *
+     * @param template
+     */
+    @SneakyThrows
+    @Override
+    public void apply(RequestTemplate template) {
+        URL url = new URL(template.feignTarget().url());
+        String signKey = url.getHost().replace("\\.", "-");
+        String secret = configs.get(signKey);
+        if (StringUtils.isBlank(secret)) {
+            return;
+        }
+
+        template.query("appKey", signKey);
+        template.query("sign", secret);
     }
 }
