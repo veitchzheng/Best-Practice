@@ -1,7 +1,10 @@
 package com.example.springbootdemo.controller;
 
+import com.example.springbootdemo.common.response.BaseResponse;
 import com.example.springbootdemo.outer.TestFeign;
 import com.example.springbootdemo.outer.TestFeign.User;
+import com.example.springbootdemo.repositories.entity.BrowseRecord;
+import com.example.springbootdemo.service.BrowseRecordService;
 import com.example.springbootdemo.service.ThreadPoolService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -63,5 +66,13 @@ public class HelloController {
     @GetMapping("/helloDate")
     public String helloDate() {
         return "hello " + new Date();
+    }
+
+    @Resource
+    private BrowseRecordService browseRecordService;
+
+    @GetMapping("/helloJpa")
+    public BaseResponse<List<BrowseRecord>> helloJpa() {
+        return BaseResponse.success(browseRecordService.findAll());
     }
 }
