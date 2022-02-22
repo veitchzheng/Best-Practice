@@ -3,6 +3,9 @@ package com.example.springbootdemo.controller;
 import com.example.springbootdemo.outer.TestFeign;
 import com.example.springbootdemo.outer.TestFeign.User;
 import com.example.springbootdemo.service.ThreadPoolService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -17,13 +20,16 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author zhengweichao  2022-02-10 12:56 下午
  **/
+@Tag(name = "hello", description = "测试 http，实际使用的时候删掉")
 @Slf4j
 @Validated
 @RestController
 public class HelloController {
 
+    @Operation(summary = "summary", description = "第一个 request")
     @GetMapping("/hello")
-    public String hello(@NotNull(message = "world 不能为空") String world, @NotNull(message = "world1 不能为空") String world1){
+    public String hello(@NotNull(message = "world 不能为空") @Parameter(name = "世界", example = "world") String world,
+        @NotNull(message = "world1 不能为空") String world1) {
         log.info("hello");
         log.warn("hello warn");
         log.error("hello error");
@@ -49,13 +55,13 @@ public class HelloController {
     private TestFeign testFeign;
 
     @GetMapping("/helloFeign")
-    public List<User> helloFeign(){
+    public List<User> helloFeign() {
         List<User> posts = testFeign.posts();
         return posts;
     }
 
     @GetMapping("/helloDate")
-    public String helloDate(){
+    public String helloDate() {
         return "hello " + new Date();
     }
 }

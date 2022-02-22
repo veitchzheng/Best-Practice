@@ -5,6 +5,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Contract;
 import feign.Logger;
+import feign.Logger.Level;
 import feign.Request;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
@@ -68,9 +69,13 @@ public class FeignClientConfig {
         return new Retryer.Default(100, SECONDS.toMillis(1), 3);
     }
 
+    /**
+     * 输出 response 的话 改成 FULL
+     * @return
+     */
     @Bean
     public Logger.Level feignLoggerLevel() {
-        return Logger.Level.FULL;
+        return Level.BASIC;
     }
 
     @Bean
@@ -104,7 +109,7 @@ class FeignRequestSignInterceptor implements RequestInterceptor {
     @Override
     public void apply(RequestTemplate template) {
         URL url = new URL(template.feignTarget().url());
-        String signKey = url.getHost().replace("\\.", "-");
+        String signKey = url.getHost().replace(".", "-");
         String secret = configs.get(signKey);
         if (StringUtils.isBlank(secret)) {
             return;
