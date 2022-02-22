@@ -1,3 +1,8 @@
 sign:
   configs:
     jsonplaceholder-typicode-com: 123456
+
+# https://springdoc.org/#properties
+springdoc:
+  api-docs:
+    enabled: true

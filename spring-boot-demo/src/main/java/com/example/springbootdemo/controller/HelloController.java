@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author zhengweichao  2022-02-10 12:56 下午
  **/
-@Tag(name = "hello", description = "测试 http，实际使用的时候删掉")
 @Slf4j
 @Validated
 @RestController
+@Tag(name = "hello", description = "测试 http，实际使用的时候删掉")
 public class HelloController {
 
     @Operation(summary = "summary", description = "第一个 request")
